@@ -10,31 +10,34 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import androidx.core.content.edit
+import com.example.sharedpreferences.MainActivity
 import com.example.sharedpreferences.R
 
-class MainFragment : Fragment() {
+class LoginFragment : Fragment() {
 
     private lateinit var preferences: SharedPreferences
+    private var activityPai : MainActivity? = null
 
     companion object {
-        fun newInstance() = MainFragment()
+        fun newInstance() = LoginFragment()
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return inflater.inflate(R.layout.main_fragment, container, false)
+        return inflater.inflate(R.layout.login_fragment, container, false)
     }
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val inputEmailTextView = view.findViewById<EditText>(R.id.inputEmailTextView)
+        activityPai = requireActivity() as? MainActivity
 
-        preferences =
-            requireActivity().getSharedPreferences("preferences_session", Context.MODE_PRIVATE)
+        val inputEmailTextView = view.findViewById<EditText>(R.id.inputEmail)
+
+        preferences = requireActivity().getSharedPreferences("preferences_session", Context.MODE_PRIVATE)
 
         val emailSalvo = preferences.getString("chave email", "")
         if (!emailSalvo.isNullOrEmpty()) {
@@ -46,9 +49,12 @@ class MainFragment : Fragment() {
                     putString("chave email", inputEmailTextView.text.toString())
                     commit()
                 }
+                activityPai?.replaceFrag(UsuarioFragment())
+
             }
         }
 
     }
+
 }
 
