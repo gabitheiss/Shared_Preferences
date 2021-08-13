@@ -42,6 +42,8 @@ class LoginFragment : Fragment() {
         val emailSalvo = preferences.getString("chave email", "")
         if (!emailSalvo.isNullOrEmpty()) {
             inputEmailTextView.setText(emailSalvo)
+
+
         }
         view.findViewById<Button>(R.id.buttonSave).apply {
             setOnClickListener {
